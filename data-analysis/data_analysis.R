@@ -118,35 +118,61 @@ get.task.for.interface <- function(full.data, version) {
 
   # ALL
   task.times <- rbind(current.first, dev.first, current.second, dev.second)
+
+  print(colMeans(subset(task.times, select=T1:T7, version=='current')))
+  print(colMeans(subset(task.times, select=T1:T7, version=='in-development')))
+
+  X <- task.times$version
+  Y <- cbind(task.times$T1, task.times$T2, task.times$T3, task.times$T4, task.times$T5, task.times$T6, task.times$T7)
+  model <- aov(Y ~ X, task.times)
+  summary(model)
+
   task.times <- melt(task.times)
   task.times$value <- task.times$value / 1000
 
   plot <- ggplot(task.times, aes(x=variable, y=value))
-  plot + geom_boxplot(aes(color=factor(version)))
-
+  plot <- plot + ggtitle('Overall Task Completion Time')
+  plot <- plot + labs(x='Task', y='Time to Complete (s)')
+  plot <- plot + geom_boxplot(aes(color=factor(version)), outlier.shape=NA)
+  plot <- plot + scale_y_continuous(limits=c(0, 350))
+  ggsave(paste(WD, 'overall_task_completion.png', sep=''), plot=plot)
 
   # INITIAL
   task.times <- rbind(current.first, dev.first)
+
+  X <- task.times$version
+  Y <- cbind(task.times$T1, task.times$T2, task.times$T3, task.times$T4, task.times$T5, task.times$T6, task.times$T7)
+  model <- aov(Y ~ X, task.times)
+  summary(model)
+
   task.times <- melt(task.times)
   task.times$value <- task.times$value / 1000
 
   plot <- ggplot(task.times, aes(x=variable, y=value))
-  plot + geom_boxplot(aes(color=factor(version)))
+  plot <- plot + ggtitle('First Round Task Completion Time')
+  plot <- plot + labs(x='Task', y='Time to Complete (s)')
+  plot <- plot + geom_boxplot(aes(color=factor(version)), outlier.shape=NA)
+  plot <- plot + scale_y_continuous(limits=c(0, 350))
+  ggsave(paste(WD, 'first_task_completion.png', sep=''), plot=plot)
 
 
   # SECOND
   task.times <- rbind(current.first, dev.first, current.second, dev.second)
+
+  X <- task.times$version
+  Y <- cbind(task.times$T1, task.times$T2, task.times$T3, task.times$T4, task.times$T5, task.times$T6, task.times$T7)
+  model <- aov(Y ~ X, task.times)
+  summary(model)
+
   task.times <- melt(task.times)
   task.times$value <- task.times$value / 1000
 
   plot <- ggplot(task.times, aes(x=variable, y=value))
-  plot + geom_boxplot(aes(color=factor(version)))
-
-
-
-
-
-
+  plot <- plot + ggtitle('Second Round Task Completion Time')
+  plot <- plot + labs(x='Task', y='Time to Complete (s)')
+  plot <- plot + geom_boxplot(aes(color=factor(version)), outlier.shape=NA)
+  plot <- plot + scale_y_continuous(limits=c(0, 250))
+  ggsave(paste(WD, 'second_task_completion.png', sep=''), plot=plot)
 
 
   #
@@ -165,29 +191,59 @@ get.task.for.interface <- function(full.data, version) {
 
   # ALL
   task.times <- rbind(current.first, dev.first, current.second, dev.second)
+
+  print(colMeans(subset(task.times, select=T1:T7, version=='current')))
+  print(colMeans(subset(task.times, select=T1:T7, version=='in-development')))
+
+  X <- task.times$version
+  Y <- cbind(task.times$T1, task.times$T2, task.times$T3, task.times$T4, task.times$T5, task.times$T6, task.times$T7)
+  model <- aov(Y ~ X, task.times)
+  summary(model)
+
   task.times <- melt(task.times)
-  task.times$value <- task.times$value / 1000
 
   plot <- ggplot(task.times, aes(x=variable, y=value))
-  plot + geom_boxplot(aes(color=factor(version)))
+  plot <- plot + ggtitle('Overall Task Clicks')
+  plot <- plot + labs(x='Task', y='Clicks to Complete')
+  plot <- plot + geom_boxplot(aes(color=factor(version)), outlier.shape=NA)
+  plot <- plot + scale_y_continuous(limits=c(0, 150))
+  ggsave(paste(WD, 'overall_task_clicks.png', sep=''), plot=plot)
 
 
   # INITIAL
   task.times <- rbind(current.first, dev.first)
+
+  X <- task.times$version
+  Y <- cbind(task.times$T1, task.times$T2, task.times$T3, task.times$T4, task.times$T5, task.times$T6, task.times$T7)
+  model <- aov(Y ~ X, task.times)
+  summary(model)
+
   task.times <- melt(task.times)
-  task.times$value <- task.times$value / 1000
 
   plot <- ggplot(task.times, aes(x=variable, y=value))
-  plot + geom_boxplot(aes(color=factor(version)))
+  plot <- plot + ggtitle('First Round Task Clicks')
+  plot <- plot + labs(x='Task', y='Clicks to Complete')
+  plot <- plot + geom_boxplot(aes(color=factor(version)), outlier.shape=NA)
+  # plot <- plot + scale_y_continuous(limits=c(0, 140))
+  ggsave(paste(WD, 'first_task_clicks.png', sep=''), plot=plot)
 
 
   # SECOND
   task.times <- rbind(current.first, dev.first, current.second, dev.second)
+
+  X <- task.times$version
+  Y <- cbind(task.times$T1, task.times$T2, task.times$T3, task.times$T4, task.times$T5, task.times$T6, task.times$T7)
+  model <- aov(Y ~ X, task.times)
+  summary(model)
+
   task.times <- melt(task.times)
-  task.times$value <- task.times$value / 1000
 
   plot <- ggplot(task.times, aes(x=variable, y=value))
-  plot + geom_boxplot(aes(color=factor(version)))
+  plot <- plot + ggtitle('Second Round Task Clicks')
+  plot <- plot + labs(x='Task', y='Clicks to Complete')
+  plot <- plot + geom_boxplot(aes(color=factor(version)), outlier.shape=NA)
+  # plot <- plot + scale_y_continuous(limits=c(0, 75))
+  ggsave(paste(WD, 'second_task_clicks.png', sep=''), plot=plot)
 }
 
 
